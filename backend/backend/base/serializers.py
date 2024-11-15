@@ -9,7 +9,7 @@ from rest_framework_simplejwt.tokens import AccessToken
 
 # Model serializers
 
-class CustomUserSerializer(serializers.Serializer):
+class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = "__all__"
@@ -19,7 +19,7 @@ class CustomUserSerializer(serializers.Serializer):
         return get_user_model.object.create_user(**validated_data)
     
 
-class TaskSerializer(serializers.Serializer):
+class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = "__all__"
