@@ -20,11 +20,10 @@ class UserRegisterView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# JWT Views
-#     
+      
 class UserTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
     
 class UserTokenRefreshView(TokenRefreshView):
     serializer_class = CustomTokenRefreshSerializer
+
