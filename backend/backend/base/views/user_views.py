@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from base.serializers import CustomUserSerializer
 from base.models import CustomUser
-
+from base.serializers import CustomTokenRefreshSerializer, CustomTokenObtainPairSerializer
 
 class UserListView(generics.ListAPIView):
     queryset = CustomUser.objects.all()
@@ -20,3 +20,10 @@ class UserRegisterView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+      
+class UserTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+    
+class UserTokenRefreshView(TokenRefreshView):
+    serializer_class = CustomTokenRefreshSerializer
+
