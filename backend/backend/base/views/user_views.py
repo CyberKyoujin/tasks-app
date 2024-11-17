@@ -5,6 +5,8 @@ from rest_framework import status
 from base.serializers import CustomUserSerializer
 from base.models import CustomUser
 from base.serializers import CustomTokenRefreshSerializer, CustomTokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 
 class UserListView(generics.ListAPIView):
     queryset = CustomUser.objects.all()
