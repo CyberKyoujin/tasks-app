@@ -6,9 +6,10 @@ from base.serializers import CustomUserSerializer
 from base.models import CustomUser
 from base.serializers import CustomTokenRefreshSerializer, CustomTokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-
+from rest_framework.permissions import IsAuthenticated
 
 class UserListView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
