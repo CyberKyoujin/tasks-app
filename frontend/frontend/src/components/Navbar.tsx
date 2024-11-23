@@ -1,9 +1,23 @@
 import React from "react";
+import { RiCheckDoubleLine } from "react-icons/ri";
+
 
 const Navbar: React.FC = () => {
  return (
-    <div>
-        Navbar
+    <div className="nav">
+        <div className="nav-header">
+            <RiCheckDoubleLine style={{fontSize: "60px"}}/>
+            <h1 className="nav-logo-text">Tasks</h1>
+        </div>
+
+        <div className="nav-profile-container">
+            <div className="nav-avatar-container">
+                <h2 className="nav-avatar-text">M</h2>
+            </div>
+            <div className="nav-name-container">
+                <p>Adam Peterson</p>
+            </div>
+        </div>
     </div>
  )
 }

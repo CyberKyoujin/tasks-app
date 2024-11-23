@@ -3,6 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import useMainStore from './zustand/mainStore'
+import Navbar from './components/Navbar'
+import TasksSection from './components/TasksSection'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,11 +16,22 @@ function App() {
   }, []);
 
   return (
-    <div>
-      Tasks
-
-      
-    </div>
+    <>
+      <Navbar/>
+      <TasksSection 
+      tasks={
+        [
+          {
+            id: "1", 
+            title: "Make Homework", 
+            description: "Do math tasks for the exam on Thursday", 
+            completed: false,
+            priority: "1",
+            dueDate: "2022-01-15"
+          }
+        ]
+      }/>
+    </>
   )
 }
 
