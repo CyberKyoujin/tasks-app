@@ -8,6 +8,7 @@ interface Task {
     completed: boolean;
     priority: string;
     dueDate: string;
+    isMissed: boolean;
 }
 
 

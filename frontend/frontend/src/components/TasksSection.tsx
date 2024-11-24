@@ -1,7 +1,8 @@
 import React from "react";
 import { MdChecklist } from "react-icons/md";
 import Task from "./Task";
-
+import { IconType } from "react-icons";
+import { FaPlus } from "react-icons/fa";
 
 interface Task {
     id: string;
@@ -10,19 +11,30 @@ interface Task {
     completed: boolean;
     priority: string;
     dueDate: string;
+    isMissed: boolean;
 }
 
 interface TasksSectionProps {
     tasks: Task[];
     title: string;
+    IconComponent: IconType;
 }
 
-const TasksSection: React.FC<TasksSectionProps> = ({tasks, title}) => {
+const TasksSection: React.FC<TasksSectionProps> = ({tasks, title, IconComponent}) => {
     return (
         <div className="task-section">
             <div className="tasks-header">
-                <MdChecklist style={{fontSize: "60px", color: "rgb(92, 92, 247)"}}/>
-                <h1>{title}</h1>
+                <div className="section-title-text">
+                    <IconComponent style={{fontSize: "60px", color: "rgb(92, 92, 247)"}}/>
+                    <h1>{title}</h1>
+                </div>
+                
+                {title === "Active Tasks" && (
+                <div>
+                    <button className="add-btn"><FaPlus/></button>
+                </div>
+                )}
+                
             </div>
 
             <div className="divider"></div>
@@ -36,6 +48,7 @@ const TasksSection: React.FC<TasksSectionProps> = ({tasks, title}) => {
                     completed={task.completed}
                     priority={task.priority}
                     dueDate={task.dueDate}
+                    isMissed={task.isMissed}
                     />
                 ))}
             </div>
