@@ -8,10 +8,10 @@ interface Task {
     id: string;
     title: string;
     description: string;
-    completed: boolean;
+    is_completed: boolean;
     priority: string;
-    dueDate: string;
-    isMissed: boolean;
+    due_date: string;
+    is_missed: boolean;
 }
 
 interface TasksSectionProps {
@@ -45,10 +45,10 @@ const TasksSection: React.FC<TasksSectionProps> = ({tasks, title, IconComponent}
                     id={task.id} 
                     title={task.title}
                     description={task.description}
-                    completed={task.completed}
+                    is_completed={task.is_completed}
                     priority={task.priority}
-                    dueDate={task.dueDate}
-                    isMissed={task.isMissed}
+                    due_date={task.due_date}
+                    is_missed={task.is_missed}
                     />
                 ))}
             </div>

@@ -2,7 +2,12 @@ import React from "react";
 import { RiCheckDoubleLine } from "react-icons/ri";
 
 
-const Navbar: React.FC<{ setIsDropdownOpen: (open: boolean) => void }> = ({ setIsDropdownOpen }) => {
+interface NavbarProps {
+    isDropdownOpen: boolean;
+    setIsDropdownOpen: (open: boolean) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ isDropdownOpen, setIsDropdownOpen }) => {
  return (
     <div className="nav">
         <div className="nav-header">
@@ -10,7 +15,7 @@ const Navbar: React.FC<{ setIsDropdownOpen: (open: boolean) => void }> = ({ setI
             <h1 className="nav-logo-text">Tasks</h1>
         </div>
 
-        <div className="nav-profile-container" onClick={() => setIsDropdownOpen(true)}>
+        <div className="nav-profile-container" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
             <div className="nav-avatar-container">
                 <h2 className="nav-avatar-text">M</h2>
             </div>

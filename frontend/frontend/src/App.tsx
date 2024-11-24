@@ -12,71 +12,41 @@ import ProfileDropdown from './components/ProfileDropdown'
 
 function App() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const { tasks, fetchTasks } = useMainStore.getState();
+  const { tasks, fetchTasks, isLoading, error } = useMainStore();
 
   useEffect(() => {
     fetchTasks();
-    console.log(isDropdownOpen)
-  }, [isDropdownOpen]);
+    console.log(tasks);
+  }, [fetchTasks]);
+
+  if (isLoading) return <div>Loading tasks...</div>;
+  if (error) return <div>Error fetching tasks: {error}</div>;
 
   return (
     <>
-      <Navbar setIsDropdownOpen={setIsDropdownOpen}/>
-      <ProfileDropdown isOpen={isDropdownOpen} setIsDropdownOpen={setIsDropdownOpen}/>
+      <Navbar setIsDropdownOpen={setIsDropdownOpen} isDropdownOpen={isDropdownOpen} />
+      <ProfileDropdown isOpen={isDropdownOpen} setIsDropdownOpen={setIsDropdownOpen} />
       <TasksSection 
-      tasks={
-        [
-          {
-            id: "1", 
-            title: "Make Homework", 
-            description: "Do math tasks for the exam on Thursday", 
-            completed: false,
-            priority: "1",
-            dueDate: "2022-01-15",
-            isMissed: false
-          }
-        ]
-      }
-      title="Active Tasks"
-      IconComponent={CiBoxList}
+        tasks={tasks?.filter(task => task.is_missed === false && task.is_completed === false) || []} 
+        title="Active Tasks" 
+        IconComponent={CiBoxList} 
       />
       <TasksSection 
-      tasks={
-        [
-          {
-            id: "1", 
-            title: "Make Homework", 
-            description: "Do math tasks for the exam on Thursday", 
-            completed: true,
-            priority: "1",
-            dueDate: "2022-01-15",
-            isMissed: false,
-          }
-        ]
-      }
-      title="Completed Tasks"
-      IconComponent={MdChecklist}
+        tasks={
+          tasks?.filter(task => task.is_completed === true) || []
+        }
+        title="Completed Tasks" 
+        IconComponent={MdChecklist} 
       />
       <TasksSection 
-      tasks={
-        [
-          {
-            id: "1", 
-            title: "Take dog", 
-            description: "Do math tasks for the exam on Thursday", 
-            completed: false,
-            priority: "1",
-            dueDate: "2022-01-15",
-            isMissed: true,
-          }
-        ]
-      }
-      title="Missed Tasks"
-      IconComponent={ImCancelCircle}
+        tasks={
+          tasks?.filter(task => task.is_missed) || []
+        }
+        title="Missed Tasks" 
+        IconComponent={ImCancelCircle} 
       />
     </>
-  )
+  );
 }
 
 export default App

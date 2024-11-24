@@ -7,23 +7,23 @@ interface TaskProps {
     id: string;
     title: string;
     description: string;
-    completed: boolean;
+    is_completed: boolean;
     priority: string;
-    dueDate: string;
-    isMissed: boolean;
+    due_date: string;
+    is_missed: boolean;
 }
 
-const Task: React.FC<TaskProps> = ({ id, title, description, completed, priority, dueDate, isMissed }) => {
+const Task: React.FC<TaskProps> = ({ id, title, description, is_completed, priority, due_date, is_missed }) => {
 
     const [taskBackground, setTaskBackground] = useState<string>('');
     const [itemsBackground, setItemsBackground] = useState<string>('');
 
     useEffect(() => {
-        if (isMissed === true) {
+        if (is_missed === true) {
             // Missed tasks
-            setTaskBackground("linear-gradient(to right, rgb(110, 110, 110), rgb(203, 203, 203))");
+            setTaskBackground("linear-gradient(to right, rgb(110, 110, 110), rgb(190, 190, 190))");
             setItemsBackground("rgb(102, 101, 101)"); 
-        } else if (completed) {
+        } else if (is_completed) {
             // Completed tasks
             setTaskBackground("linear-gradient(to right, rgb(25, 185, 30), rgb(116, 243, 120))");
             setItemsBackground("rgb(25, 185, 30)"); 
@@ -33,7 +33,7 @@ const Task: React.FC<TaskProps> = ({ id, title, description, completed, priority
             setItemsBackground("rgb(92, 92, 247)"); 
         }
 
-    }, [completed, isMissed]); 
+    }, [is_completed, is_missed]); 
      
 
     return (
@@ -45,7 +45,7 @@ const Task: React.FC<TaskProps> = ({ id, title, description, completed, priority
             <div className="task-header">
                 <div className="task-title-container">
                     <h2>{title.length > 18 ? title.slice(0, 17) + "..." : title}</h2>
-                    <p>Due to {dueDate}</p>
+                    <p>Due to {due_date}</p>
                 </div>
                 <div className="task-priority-container">
                     <div 
@@ -67,14 +67,14 @@ const Task: React.FC<TaskProps> = ({ id, title, description, completed, priority
                 <button 
                     style={{
                         backgroundColor: itemsBackground, 
-                        width: completed || isMissed ? "100%" : "160px"
+                        width: is_completed || is_missed ? "100%" : "160px"
                     }}
                 >
                     <MdOutlineDeleteOutline />
                 </button>
                 <button 
                     style={{
-                        display: completed || isMissed ? "none" : "flex", 
+                        display: is_completed || is_missed ? "none" : "flex", 
                         backgroundColor: itemsBackground
                     }}
                 >

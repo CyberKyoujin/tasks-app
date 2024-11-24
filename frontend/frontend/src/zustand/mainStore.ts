@@ -5,15 +5,15 @@ interface Task {
     id: string;
     title: string;
     description: string;
-    completed: boolean;
+    is_completed: boolean;
     priority: string;
-    dueDate: string;
-    isMissed: boolean;
+    due_date: string;
+    is_missed: boolean;
 }
 
 
 interface MainState {
-    tasks: Task[] | null;
+    tasks: Task[] |null;
     isLoading: boolean;
     error: string | null;
     setTasks: (tasks: Task[]) => void;
@@ -34,18 +34,17 @@ const useMainStore = create<MainState>((set, get) => ({
     },
 
     fetchTasks: async () => {
-        set({isLoading: true, error: null});
-        try{
-            const response = await axiosInstance.get("/tasks");
+        set({ isLoading: true, error: null });
+        try {
+            const response = await axiosInstance.get("/tasks/");
             if (response.status === 200) {
-                set({isLoading: false, error: null });
-                get().setTasks(response.data);
+                set({ tasks: response.data, isLoading: false, error: null });
             } else {
                 set({ tasks: null, isLoading: false, error: "Failed to fetch tasks" });
-                throw new Error("Failed to fetch tasks");    
             }
         } catch (error: any) {
-            set({ tasks: null, isLoading: false, error: error });
+            set({ tasks: null, isLoading: false, error: error.message || "An error occurred" });
+            console.error("Error while fetching tasks:", error);
         }
     },
 
