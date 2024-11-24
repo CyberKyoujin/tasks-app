@@ -30,7 +30,39 @@ function App() {
             dueDate: "2022-01-15"
           }
         ]
-      }/>
+      }
+      title="Active Tasks"
+      />
+      <TasksSection 
+      tasks={
+        [
+          {
+            id: "1", 
+            title: "Make Homework", 
+            description: "Do math tasks for the exam on Thursday", 
+            completed: true,
+            priority: "1",
+            dueDate: "2022-01-15"
+          }
+        ]
+      }
+      title="Completed Tasks"
+      />
+      <TasksSection 
+      tasks={
+        [
+          {
+            id: "1", 
+            title: "Make Homework", 
+            description: "Do math tasks for the exam on Thursday", 
+            completed: true,
+            priority: "1",
+            dueDate: "2022-01-15"
+          }
+        ]
+      }
+      title="Missed Tasks"
+      />
     </>
   )
 }

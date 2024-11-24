@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractUser
-
+from django.utils import timezone
 
 
 class CustomUserManager(BaseUserManager):
@@ -38,6 +38,7 @@ class CustomUser(AbstractUser):
         
 
 class Task(models.Model):
+    user = models.ForeignKey(CustomUser, null=True, blank=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     is_completed = models.BooleanField(default=False)
@@ -46,3 +47,9 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+    
+    @property
+    def is_missed(self):
+        if not self.is_completed and self.due_date and self.due_date < timezone.now().date():
+            return True
+        return False

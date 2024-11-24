@@ -22,7 +22,7 @@ const TasksSection: React.FC<TasksSectionProps> = ({tasks, title}) => {
         <div className="task-section">
             <div className="tasks-header">
                 <MdChecklist style={{fontSize: "60px", color: "rgb(92, 92, 247)"}}/>
-                <h1>Active Tasks</h1>
+                <h1>{title}</h1>
             </div>
 
             <div className="divider"></div>
