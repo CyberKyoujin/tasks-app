@@ -18,9 +18,10 @@ interface TasksSectionProps {
     tasks: Task[];
     title: string;
     IconComponent: IconType;
+    setCreateMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const TasksSection: React.FC<TasksSectionProps> = ({tasks, title, IconComponent}) => {
+const TasksSection: React.FC<TasksSectionProps> = ({tasks, title, IconComponent, setCreateMenuOpen}) => {
     return (
         <div className="task-section">
             <div className="tasks-header">
@@ -31,7 +32,7 @@ const TasksSection: React.FC<TasksSectionProps> = ({tasks, title, IconComponent}
                 
                 {title === "Active Tasks" && (
                 <div>
-                    <button className="add-btn"><FaPlus/></button>
+                    <button className="add-btn" onClick={() => setCreateMenuOpen(true)}><FaPlus/></button>
                 </div>
                 )}
                 
