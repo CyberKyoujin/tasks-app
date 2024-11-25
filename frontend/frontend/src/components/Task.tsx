@@ -11,8 +11,21 @@ interface TaskProps {
 
 const Task: React.FC<TaskProps> = ({id, title, description, completed, priority, dueDate}) => {
  return (
-    <div className="task=container" key={id}>
-        <h2>{title}</h2>
+    <div className="task-container" key={id}>
+
+        <div className="task-header">
+            <div className="task-title-container">
+                <h2>{title}</h2>
+            </div>
+            <div className="task-priority-container">
+                <div className="task-priority">
+                    <h1>{priority}</h1>
+                </div>
+            </div>
+        </div>
+
+        <div className="divider"></div>
+
         <p>{description}</p>
     </div>
  )
