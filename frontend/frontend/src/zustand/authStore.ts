@@ -13,6 +13,8 @@ interface User {
     email: string;
     firstName: string;
     lastName: string;
+    date_joined: string;
+    tasks: string;
 }
 
 interface AuthState {
@@ -28,9 +30,12 @@ interface AuthState {
 }
 
 const useAuthStore = create<AuthState>((set, get) => ({
-    authTokens: null,
-    isAuthenticated: false,
-    user: null,
+    authTokens: localStorage.getItem('access') && localStorage.getItem('refresh') 
+    ? { access: localStorage.getItem('access') as string, 
+        refresh: localStorage.getItem('refresh') as string } 
+    : null,
+    isAuthenticated: !!localStorage.getItem('access') && !!localStorage.getItem('refresh'),
+    user: localStorage.getItem('access') ? (jwtDecode(localStorage.getItem('access') as string) as User) : null,
 
     setTokens: (tokens: AuthTokens) => {
         if (tokens) {
@@ -48,10 +53,10 @@ const useAuthStore = create<AuthState>((set, get) => ({
 
     registerUser: async (username: string, email: string, password: string) => {
         try{
-            const response = await axiosInstance.post("/users/create", {username, email, password});
+            const response = await axiosInstance.post("/users/register/", {username, email, password});
             if (response.status === 201) {
                 console.log("User created successfully!");
-                
+                window.location.href = "/";
             }
         } catch (error: any) {
             console.error("Error creating user:", error.message);
@@ -61,7 +66,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
 
     loginUser: async (username: string, password: string) => {
         try{
-            const response = await axiosInstance.post("/users/login", {username, password});
+            const response = await axiosInstance.post("/users/login/", {username, password});
             if (response.status === 200) {
                 const { access, refresh } = response.data;
                 const tokens: AuthTokens = { access, refresh };
@@ -69,7 +74,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
                 localStorage.setItem("refresh", tokens.refresh);
                 set({authTokens: tokens});
                 set({user: jwtDecode(access) as User});
-
+                window.location.href = "/";
             }
         } catch (error: any) {
             console.error("Error logging in:", error.message);
@@ -81,7 +86,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
         try{
             const refreshToken = localStorage.getItem("refresh");
             if (refreshToken) {
-                const response = await axiosInstance.post("/users/token-refresh", {refreshToken});
+                const response = await axiosInstance.post("/users/token-refresh/", {refresh: refreshToken});
                 const { access, refresh } = response.data;
                 localStorage.setItem("refresh", refresh);
                 localStorage.setItem("access", access);
@@ -104,14 +109,5 @@ const useAuthStore = create<AuthState>((set, get) => ({
 
 }))
 
-const initializeAuthState = () => {
-    const accessToken = localStorage.getItem('access');
-    const refreshToken = localStorage.getItem('refresh');
-    if (accessToken && refreshToken) {
-        const tokens: AuthTokens = { access: accessToken, refresh: refreshToken };
-        useAuthStore.getState().setTokens(tokens);
-        useAuthStore.getState().setUser(jwtDecode(accessToken) as User);
-    }
-};
+export default useAuthStore;
 
-initializeAuthState();

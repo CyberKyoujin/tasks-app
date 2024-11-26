@@ -9,18 +9,25 @@ from django.utils import timezone
 
 
 class TaskListView(APIView):
-    def get(self, request, *args, **kwargs):
-        tasks = Task.objects.all().order_by("priority")
+    def get(self, request):
+        tasks = Task.objects.all().filter(user=request.user).order_by("priority")
         serializer = TaskSerializer(tasks, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     
 class TaskCreateView(generics.CreateAPIView):
-    queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user)
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
     
 class TaskCompleteView(APIView):
-    def post(self, request, pk, *args, **kwargs):
+    permission_classes = [IsAuthenticated]
+    def post(self, request, pk):
         task = Task.objects.get(pk=pk)
         task.is_completed = True
         task.completed_at = timezone.now()
@@ -28,6 +35,7 @@ class TaskCompleteView(APIView):
         return Response(status=status.HTTP_200_OK)
 
 class TaskDeleteView(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 

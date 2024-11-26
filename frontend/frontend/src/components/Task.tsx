@@ -39,10 +39,6 @@ const Task: React.FC<TaskProps> = ({ id, title, description, is_completed, prior
             // Missed tasks
             setTaskBackground("linear-gradient(to right, rgb(110, 110, 110), rgb(190, 190, 190))");
             setItemsBackground("rgb(102, 101, 101)"); 
-        } else if (is_completed) {
-            // Completed tasks
-            setTaskBackground("linear-gradient(to right, rgb(25, 185, 30), rgb(116, 243, 120))");
-            setItemsBackground("rgb(25, 185, 30)"); 
         } else {
             // Active tasks
             setTaskBackground("linear-gradient(to right, rgb(92, 92, 247), rgb(147, 147, 255))");
@@ -88,10 +84,24 @@ const Task: React.FC<TaskProps> = ({ id, title, description, is_completed, prior
             style={{ background: taskBackground }} 
         >
             <div className="task-header">
+
                 <div className="task-title-container">
+
                     <h2>{title.length > 18 ? title.slice(0, 17) + "..." : title}</h2>
-                    {completed_at ? (<p>Completed at {completed_at}</p>) : (<p>Due to {due_date}</p>)}
+                    {completed_at?.length > 0 ? 
+                    (
+                    <div className="completed-container">
+                        <RiCheckDoubleLine style={{fontSize: "35px"}}/>
+                        <p>Completed at {completed_at}</p>
+                    </div>
+                    ) 
+                    : 
+                    (
+                    <p>Due to {due_date}</p>
+                    )}
+
                 </div>
+
                 <div className="task-priority-container">
                     <div 
                         className="task-priority"

@@ -10,13 +10,15 @@ from rest_framework_simplejwt.tokens import AccessToken
 # Model serializers
 
 class CustomUserSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = CustomUser
         fields = "__all__"
         extra_kwargs = {'password': {'write_only': True}}
-
     def create(self, validated_data):
-        return get_user_model.object.create_user(**validated_data)
+        return get_user_model().objects.create_user(**validated_data)
+    
+
     
 
 class TaskSerializer(serializers.ModelSerializer):
@@ -41,9 +43,10 @@ class CustomTokenRefreshSerializer(TokenRefreshSerializer):
 
         access['id'] = user.id
         access['email'] = user.email
-        access['first_name'] = user.first_name
-        access['last_name'] = user.last_name
-
+        access['username'] = user.username
+        access['date_joined'] = user.date_joined.strftime("%d-%m-%Y")
+        access['tasks'] = user.tasks.count()
+        
         data['access'] = str(access)
 
         return data    
@@ -54,7 +57,8 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         token['id'] = user.id
         token['email'] = user.email
-        token['first_name'] = user.first_name
-        token['last_name'] = user.last_name
+        token['username'] = user.username
+        token['date_joined'] = user.date_joined.strftime("%d-%m-%Y")
+        token['tasks'] = user.tasks.count()
 
         return token

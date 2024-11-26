@@ -4,7 +4,7 @@ from django.utils import timezone
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, username, email=None, password=None, **extra_fields):
+    def create_user(self, username, email, password=None, **extra_fields):
         if not username:
             raise ValueError("Username must be provided")
 
@@ -13,7 +13,7 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
     
-    def create_superuser(self, username, email=None, password=None, **extra_fields):
+    def create_superuser(self, username, email, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
@@ -21,10 +21,8 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(username, email, password, **extra_fields)
 
 class CustomUser(AbstractUser):
-    
+    username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
 
     # Inherit is_active and is_staff from AbstractUser
     
@@ -38,7 +36,7 @@ class CustomUser(AbstractUser):
         
 
 class Task(models.Model):
-    user = models.ForeignKey(CustomUser, null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, null=True, blank=True, on_delete=models.CASCADE, related_name="tasks")
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     is_completed = models.BooleanField(default=False)

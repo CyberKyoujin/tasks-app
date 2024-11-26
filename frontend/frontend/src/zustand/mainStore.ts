@@ -40,12 +40,14 @@ const useMainStore = create<MainState>((set, get) => ({
             const response = await axiosInstance.get("/tasks/");
             if (response.status === 200) {
                 set({ tasks: response.data, isLoading: false, error: null });
-            } else {
-                set({ tasks: [], isLoading: false, error: "Failed to fetch tasks" });
             }
         } catch (error: any) {
-            set({ tasks: [], isLoading: false, error: error.message || "An error occurred" });
-            console.error("Error while fetching tasks:", error);
+            if (error.status === 500) {
+                set({ tasks: [], isLoading: false, error: null });
+            } else {
+                set({ tasks: [], isLoading: false, error: error.message || "An error occurred" });
+                console.error("Error while fetching tasks:", error);
+            }
         }
     },
 
