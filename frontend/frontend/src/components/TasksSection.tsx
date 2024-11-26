@@ -14,6 +14,7 @@ interface TaskObject {
     priority: string;
     due_date: string;
     is_missed: boolean;
+    completed_at: string;
 }
 
 interface TasksSectionProps {
@@ -56,6 +57,7 @@ const TasksSection: React.FC<TasksSectionProps> = ({tasks, title, IconComponent,
                     priority={task.priority}
                     due_date={task.due_date}
                     is_missed={task.is_missed}
+                    completed_at={task.completed_at}
                     />
                     </Grid>
                 ))}

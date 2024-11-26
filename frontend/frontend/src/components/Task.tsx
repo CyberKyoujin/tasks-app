@@ -12,6 +12,7 @@ interface Task {
     priority: string;
     due_date: string;
     is_missed: boolean;
+    completed_at: string;
 }
 
 
@@ -23,9 +24,10 @@ interface TaskProps {
     priority: string;
     due_date: string;
     is_missed: boolean;
+    completed_at: string;
 }
 
-const Task: React.FC<TaskProps> = ({ id, title, description, is_completed, priority, due_date, is_missed }) => {
+const Task: React.FC<TaskProps> = ({ id, title, description, is_completed, priority, due_date, is_missed, completed_at}) => {
 
     const [taskBackground, setTaskBackground] = useState<string>('');
     const [itemsBackground, setItemsBackground] = useState<string>('');
@@ -88,7 +90,7 @@ const Task: React.FC<TaskProps> = ({ id, title, description, is_completed, prior
             <div className="task-header">
                 <div className="task-title-container">
                     <h2>{title.length > 18 ? title.slice(0, 17) + "..." : title}</h2>
-                    <p>Due to {due_date}</p>
+                    {completed_at ? (<p>Completed at {completed_at}</p>) : (<p>Due to {due_date}</p>)}
                 </div>
                 <div className="task-priority-container">
                     <div 

@@ -9,6 +9,7 @@ interface Task {
     priority: string;
     due_date: string;
     is_missed: boolean;
+    completed_at: string;
 }
 
 
