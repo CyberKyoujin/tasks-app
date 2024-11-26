@@ -98,6 +98,11 @@ body {
   align-items: center;
   gap: 0.75rem;
 }
+
+.tasks-container{
+
+}
+
 .divider{
   width: 100%;
   height: 2px;

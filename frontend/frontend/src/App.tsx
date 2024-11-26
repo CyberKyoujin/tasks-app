@@ -15,12 +15,14 @@ import Overlay from './components/Overlay'
 function App() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [createMenuOpen, setCreateMenuOpen] = useState(false);
-  const { tasks, fetchTasks, isLoading, error } = useMainStore();
+  const [taskUpdated, setTaskUpdated] = useState(false);
+
+  const {tasks, fetchTasks, isLoading, error, deleteTask } = useMainStore();
 
   useEffect(() => {
     fetchTasks();
     console.log(tasks);
-  }, [fetchTasks]);
+  }, [taskUpdated]);
 
   if (isLoading) return <div>Loading tasks...</div>;
   if (error) return <div>Error fetching tasks: {error}</div>;
@@ -28,7 +30,7 @@ function App() {
   return (
     <>
       <Navbar setIsDropdownOpen={setIsDropdownOpen} isDropdownOpen={isDropdownOpen} />
-      <CreateTask createMenuOpen={createMenuOpen} setCreateMenuOpen={setCreateMenuOpen}/>
+      <CreateTask createMenuOpen={createMenuOpen} setCreateMenuOpen={setCreateMenuOpen} setTaskUpdated={setTaskUpdated}/>
       <Overlay createMenuOpen={createMenuOpen} setCreateMenuOpen={setCreateMenuOpen}/>
       <ProfileDropdown isOpen={isDropdownOpen} setIsDropdownOpen={setIsDropdownOpen} />
       <TasksSection 
@@ -36,6 +38,7 @@ function App() {
         title="Active Tasks" 
         IconComponent={CiBoxList} 
         setCreateMenuOpen={setCreateMenuOpen}
+        setTaskUpdated={setTaskUpdated}
       />
       <TasksSection 
         tasks={
@@ -44,6 +47,7 @@ function App() {
         title="Completed Tasks" 
         IconComponent={MdChecklist} 
         setCreateMenuOpen={setCreateMenuOpen}
+        setTaskUpdated={setTaskUpdated}
       />
       <TasksSection 
         tasks={
@@ -52,6 +56,7 @@ function App() {
         title="Missed Tasks" 
         IconComponent={ImCancelCircle} 
         setCreateMenuOpen={setCreateMenuOpen}
+        setTaskUpdated={setTaskUpdated}
       />
     </>
   );

@@ -6,23 +6,25 @@ from base.serializers import TaskSerializer
 from base.models import Task
 from rest_framework.permissions import IsAuthenticated
 
-class TaskListView(generics.ListAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
+class TaskListView(APIView):
+    def get(self, request, *args, **kwargs):
+        tasks = Task.objects.all().order_by("priority")
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     
 class TaskCreateView(generics.CreateAPIView):
-    permission_classes = [IsAuthenticated]
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     
-class TaskUpdateView(generics.UpdateAPIView):
-    permission_classes = [IsAuthenticated]
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
+class TaskCompleteView(APIView):
+    def post(self, request, pk, *args, **kwargs):
+        task = Task.objects.get(pk=pk)
+        task.is_completed = True
+        task.save()
+        return Response(status=status.HTTP_200_OK)
 
 class TaskDeleteView(generics.DestroyAPIView):
-    permission_classes = [IsAuthenticated]
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 

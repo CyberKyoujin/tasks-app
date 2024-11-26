@@ -13,19 +13,19 @@ interface Task {
 
 
 interface MainState {
-    tasks: Task[] |null;
+    tasks: Task[] |[];
     isLoading: boolean;
     error: string | null;
     setTasks: (tasks: Task[]) => void;
     fetchTasks: () => Promise<void>;
     createTask: (formData: FormData) => Promise<void>;
-    updateTask: (taskId: string, formData: FormData) => Promise<void>;
+    markCompleted: (taskId: string) => Promise<void>;
     deleteTask: (taskId: string) => Promise<void>;
 }
 
 
 const useMainStore = create<MainState>((set, get) => ({
-    tasks: null,
+    tasks: [],
     isLoading: false,
     error: null,
     
@@ -40,10 +40,10 @@ const useMainStore = create<MainState>((set, get) => ({
             if (response.status === 200) {
                 set({ tasks: response.data, isLoading: false, error: null });
             } else {
-                set({ tasks: null, isLoading: false, error: "Failed to fetch tasks" });
+                set({ tasks: [], isLoading: false, error: "Failed to fetch tasks" });
             }
         } catch (error: any) {
-            set({ tasks: null, isLoading: false, error: error.message || "An error occurred" });
+            set({ tasks: [], isLoading: false, error: error.message || "An error occurred" });
             console.error("Error while fetching tasks:", error);
         }
     },
@@ -51,12 +51,11 @@ const useMainStore = create<MainState>((set, get) => ({
     createTask: async (formData: FormData) => {
         set({ isLoading: true, error: null });
         try {
-            const response = await axiosInstance.post("/tasks/create", formData);
-            if (response.status === 200) {
+            const response = await axiosInstance.post("/tasks/create/", formData);
+            if (response.status === 201) {
                 console.log("Task created successfully!");
                 set({isLoading: false, error: null})
             } else {
-                throw new Error("Failed to create task");
                 set({ isLoading: false, error: "Failed to create task" });
             }
         } catch (error: any) {
@@ -64,35 +63,35 @@ const useMainStore = create<MainState>((set, get) => ({
         }
     },
 
-    updateTask: async (taskId: string, formData: FormData) => {
-        set({ isLoading: true, error: null });
+    markCompleted: async (taskId: string) => {
+        set({ isLoading: true, error: null});
         try {
-            const response = await axiosInstance.put(`/tasks/${taskId}/update`, formData);
+            const response = await axiosInstance.post(`/tasks/complete/${taskId}/`);
             if (response.status === 200) {
-                console.log("Task updated successfully!");
+                console.log("Task marked as completed!");
                 set({ isLoading: false, error: null })
             } else {
-                set({ isLoading: false, error: "Failed to update task" });
-                throw new Error("Failed to update task");
+                set({ isLoading: false, error: "Failed to mark task as completed" });
             }
         } catch (error: any) {
-            set({ isLoading: false, error: error })
+            set({isLoading: false, error: error})
+            console.error("Error message: " + error.message);
         }
     },
 
     deleteTask: async (taskId: string) => {
         set({ isLoading: true, error: null });
         try {
-            const response = await axiosInstance.delete(`/tasks/${taskId}/delete`);
-            if (response.status === 200) {
+            const response = await axiosInstance.delete(`/tasks/delete/${taskId}/`);
+            if (response.status === 204) {
                 console.log("Task deleted successfully!");
                 set({ isLoading: false, error: null })
             } else {
                 set({ isLoading: false, error: "Failed to delete task" });
-                throw new Error("Failed to delete task");
             }
         } catch (error: any) {
-            set({ isLoading: false, error: error })
+            set({isLoading: false, error: error})
+            console.error("Error message: " + error.message);
         }
     }
 

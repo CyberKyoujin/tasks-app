@@ -1,7 +1,6 @@
 import React from "react";
 import { RiCheckDoubleLine } from "react-icons/ri";
 
-
 interface NavbarProps {
     isDropdownOpen: boolean;
     setIsDropdownOpen: (open: boolean) => void;

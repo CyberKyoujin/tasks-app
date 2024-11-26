@@ -14,7 +14,7 @@ interface ProfileDropdwnProps {
 }
 
 const ProfileDropdown: React.FC<ProfileDropdwnProps> = ({ isOpen, setIsDropdownOpen }) => {
-    
+
     const [value, setValue] = React.useState('1');
   
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -29,7 +29,9 @@ const ProfileDropdown: React.FC<ProfileDropdwnProps> = ({ isOpen, setIsDropdownO
   
         <div>
           <Box sx={{ width: '100%', typography: 'body1' }}>
+
             <TabContext value={value}>
+                
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <TabList onChange={handleChange}>
                   <Tab label="Sign Up" value="1" sx={{ width: '50%' }} />
@@ -53,7 +55,9 @@ const ProfileDropdown: React.FC<ProfileDropdwnProps> = ({ isOpen, setIsDropdownO
                   <button className="submit-btn">SUBMIT</button>
                 </form>
               </TabPanel>
+
             </TabContext>
+
           </Box>
         </div>
       </div>

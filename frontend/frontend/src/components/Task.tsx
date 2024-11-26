@@ -1,6 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { MdOutlineModeEditOutline } from "react-icons/md";
+import { RiCheckDoubleLine } from "react-icons/ri";
+import useMainStore from "../zustand/mainStore";
+
+interface Task {
+    id: string;
+    title: string;
+    description: string;
+    is_completed: boolean;
+    priority: string;
+    due_date: string;
+    is_missed: boolean;
+}
 
 
 interface TaskProps {
@@ -18,6 +30,8 @@ const Task: React.FC<TaskProps> = ({ id, title, description, is_completed, prior
     const [taskBackground, setTaskBackground] = useState<string>('');
     const [itemsBackground, setItemsBackground] = useState<string>('');
 
+    const {markCompleted, deleteTask, setTasks, tasks} = useMainStore();
+
     useEffect(() => {
         if (is_missed === true) {
             // Missed tasks
@@ -34,7 +48,36 @@ const Task: React.FC<TaskProps> = ({ id, title, description, is_completed, prior
         }
 
     }, [is_completed, is_missed]); 
-     
+
+    const handleMarkCompleted = async (id: string) => {
+        try {
+            const updatedTasks = tasks.map((task) =>
+                task.id === id ? { ...task, is_completed: true } : task
+            );
+    
+            setTasks(updatedTasks); 
+    
+            await markCompleted(id);
+        } catch (error) {
+            console.error("Failed to mark task as completed:", error);
+        }
+    };
+
+    const handleDelete = async (id: string) => {
+        try {
+            
+            await deleteTask(id);
+            const updatedTasks = tasks.filter((task) => task.id !== id);
+    
+            setTasks(updatedTasks);
+    
+            console.log(`Task with ID ${id} deleted successfully`);
+
+        } catch (error) {
+            console.error("Failed to delete task:", error);
+            alert("An error occurred while deleting the task. Please try again.");
+        }
+    };
 
     return (
         <div 
@@ -64,22 +107,46 @@ const Task: React.FC<TaskProps> = ({ id, title, description, is_completed, prior
             </div>
 
             <div className="task-btn-container">
+
+                { is_completed || is_missed ? (
+
+                    <button 
+                    style={{
+                        display: "flex", 
+                        backgroundColor: itemsBackground,
+                        width: "100%"
+                    }}
+                    onClick={() => handleDelete(id)}
+                    >
+                    <MdOutlineDeleteOutline/>
+                    </button>
+
+                ) : (
+                <>
                 <button 
                     style={{
                         backgroundColor: itemsBackground, 
-                        width: is_completed || is_missed ? "100%" : "160px"
+                        width: "160px"
                     }}
+                    onClick={() => handleDelete(id)}
                 >
-                    <MdOutlineDeleteOutline />
+                    <MdOutlineDeleteOutline/>
+                    
                 </button>
+        
                 <button 
                     style={{
-                        display: is_completed || is_missed ? "none" : "flex", 
+                        width: "160px",
                         backgroundColor: itemsBackground
                     }}
+                    onClick={() => handleMarkCompleted(id)}
                 >
-                    <MdOutlineModeEditOutline />
+                    <RiCheckDoubleLine />
                 </button>
+                </>
+                )}
+
+               
             </div>
         </div>
     );
