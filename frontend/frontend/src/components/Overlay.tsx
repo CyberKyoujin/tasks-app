@@ -12,7 +12,6 @@ const Overlay: React.FC<OverlayProps> = ({createMenuOpen, setCreateMenuOpen}) =>
         className="overlay" 
         style={{display: createMenuOpen ? "block": "none"}}
         onClick={() => setCreateMenuOpen(!createMenuOpen)}>
-    
         </div>
     )
 }

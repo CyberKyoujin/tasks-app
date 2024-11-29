@@ -23,8 +23,17 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 class TaskSerializer(serializers.ModelSerializer):
     is_missed = serializers.BooleanField(read_only=True)
-    due_date = serializers.DateField(format="%d-%m-%y", required=False)
-    completed_at = serializers.DateField(format="%d-%m-%y", required=False)
+    due_date = serializers.DateField(
+        format="%d-%m-%y",
+        required=False,
+        input_formats=['%d-%m-%y', '%Y-%m-%d']
+    )
+    completed_at = serializers.DateField(
+        format="%d-%m-%y",
+        required=False,
+        input_formats=['%d-%m-%y', '%Y-%m-%d']
+    )
+
     class Meta:
         model = Task
         fields = "__all__"
