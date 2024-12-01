@@ -14,7 +14,7 @@ interface Task {
 
 
 interface MainState {
-    tasks: Task[] |[];
+    tasks: Task[];
     isLoading: boolean;
     error: string | null;
     setTasks: (tasks: Task[]) => void;

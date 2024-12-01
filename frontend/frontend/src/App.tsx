@@ -1,7 +1,4 @@
 import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 import useMainStore from './zustand/mainStore'
 import Navbar from './components/Navbar'
 import TasksSection from './components/TasksSection'
@@ -39,6 +36,7 @@ function App() {
 
   useEffect(() => {
     fetchTasks();
+    console.log(tasks)
   }, [taskUpdated]);
 
   if (isLoading) return <div className='progress-container'>
