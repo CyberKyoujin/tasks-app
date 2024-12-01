@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { MdOutlineDeleteOutline } from "react-icons/md";
-import { MdOutlineModeEditOutline } from "react-icons/md";
 import { RiCheckDoubleLine } from "react-icons/ri";
 import useMainStore from "../zustand/mainStore";
 

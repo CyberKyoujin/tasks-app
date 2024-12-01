@@ -28,6 +28,7 @@ const ProfileDropdown: React.FC<ProfileDropdwnProps> = ({ isOpen, setIsDropdownO
     }, [isAuthenticated])
   
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+      event.preventDefault();
       setValue(newValue);
     };
 

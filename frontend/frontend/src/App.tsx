@@ -18,9 +18,9 @@ function App() {
   const [createMenuOpen, setCreateMenuOpen] = useState(false);
   const [taskUpdated, setTaskUpdated] = useState(false);
 
-  const {tasks, fetchTasks, deleteTask, isLoading, error } = useMainStore();
+  const {tasks, fetchTasks, isLoading, error } = useMainStore();
 
-  const { user, refreshToken } = useAuthStore();
+  const { refreshToken } = useAuthStore();
 
   useEffect(() => {
     const refreshTokenInterval = setInterval(async () => {

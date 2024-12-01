@@ -1,5 +1,3 @@
-// src/tests/App.test.tsx (Jest)
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from '../App';
 import  useMainStore  from '../zustand/mainStore';
@@ -11,6 +9,7 @@ jest.mock('../zustand/mainStore');
 jest.mock('../zustand/authStore');
 
 describe('App Component', () => {
+
   beforeEach(() => {
     jest.resetAllMocks();
   });

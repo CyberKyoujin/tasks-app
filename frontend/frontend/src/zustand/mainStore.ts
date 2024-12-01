@@ -25,7 +25,7 @@ interface MainState {
 }
 
 
-const useMainStore = create<MainState>((set, get) => ({
+const useMainStore = create<MainState>((set) => ({
     tasks: [],
     isLoading: false,
     error: null,
