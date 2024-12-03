@@ -1,5 +1,4 @@
 import { IconType } from "react-icons";
-
 export interface Task {
     id: string;
     title: string;
@@ -10,7 +9,6 @@ export interface Task {
     is_missed: boolean;
     completed_at: string;
 }
-
 export interface MainState {
     tasks: Task[];
     isLoading: boolean;
@@ -21,12 +19,10 @@ export interface MainState {
     markCompleted: (taskId: string) => Promise<void>;
     deleteTask: (taskId: string) => Promise<void>;
 }
-
 export interface AuthTokens {
     access: string;
     refresh: string;
 }
-
 export interface User {
     id: string;
     username: string;
@@ -34,7 +30,6 @@ export interface User {
     date_joined: string;
     tasks: string;
 }
-
 export interface AuthState {
     authTokens: AuthTokens | null;
     isAuthenticated: boolean;
@@ -46,7 +41,6 @@ export interface AuthState {
     refreshToken: () => Promise<void>;
     logoutUser: () => void;
 }
-
 export interface TaskObject {
     id: string;
     title: string;
@@ -57,7 +51,6 @@ export interface TaskObject {
     is_missed: boolean;
     completed_at: string;
 }
-
 export interface TasksSectionProps {
     tasks: TaskObject[];
     title: string;
@@ -66,25 +59,20 @@ export interface TasksSectionProps {
     setTaskUpdated: React.Dispatch<React.SetStateAction<boolean>>;
     setDropdownOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
 export interface ProfileDropdwnProps {
     isOpen: boolean;
     setIsDropdownOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
 export interface OverlayProps {
     createMenuOpen: boolean;
     setCreateMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
-
 export interface NavbarProps {
     isDropdownOpen: boolean;
     setIsDropdownOpen: (open: boolean) => void;
 }
-
 export interface CreateTaskProps {
     createMenuOpen: boolean;
     setCreateMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    setTaskUpdated: React.Dispatch<React.SetStateAction<boolean>>; // New prop
-  }
+    setTaskUpdated: React.Dispatch<React.SetStateAction<boolean>>;
+}

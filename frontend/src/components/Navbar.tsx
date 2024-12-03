@@ -6,7 +6,7 @@ import { NavbarProps } from "../types";
 const Navbar: React.FC<NavbarProps> = ({ isDropdownOpen, setIsDropdownOpen }) => {
 
 
- const { user, isAuthenticated } = useAuthStore();
+ const { user } = useAuthStore();
 
  return (
     <div className="nav">

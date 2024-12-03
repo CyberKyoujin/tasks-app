@@ -10,6 +10,8 @@ from django.utils import timezone
 
 class TaskListView(APIView):
     def get(self, request):
+        if not request.user.is_authenticated:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         tasks = Task.objects.all().filter(user=request.user).order_by("priority")
         serializer = TaskSerializer(tasks, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

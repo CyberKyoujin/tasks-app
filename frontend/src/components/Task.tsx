@@ -27,11 +27,11 @@ const Task: React.FC<TaskObject> = ({ id, title, description, is_completed, prio
 
     const handleMarkCompleted = async (id: string) => {
         try {
-            const updatedTasks = tasks.map((task) =>
+            const updatedTasks = tasks?.map((task) =>
                 task.id === id ? { ...task, is_completed: true } : task
             );
     
-            setTasks(updatedTasks); 
+            setTasks(updatedTasks || []); 
     
             await markCompleted(id);
         } catch (error) {
@@ -43,9 +43,9 @@ const Task: React.FC<TaskObject> = ({ id, title, description, is_completed, prio
         try {
             
             await deleteTask(id);
-            const updatedTasks = tasks.filter((task) => task.id !== id);
+            const updatedTasks = tasks?.filter((task) => task.id !== id);
     
-            setTasks(updatedTasks);
+            setTasks(updatedTasks || []);
 
         } catch (error) {
             console.error("Failed to delete task:", error);
