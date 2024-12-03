@@ -12,13 +12,9 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { IoIosClose } from "react-icons/io";
 import useMainStore from "../zustand/mainStore";
 import { Dayjs } from "dayjs";
+import { CreateTaskProps } from "../types";
 
 
-interface CreateTaskProps {
-    createMenuOpen: boolean;
-    setCreateMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    setTaskUpdated: React.Dispatch<React.SetStateAction<boolean>>; // New prop
-  }
   
   const CreateTask: React.FC<CreateTaskProps> = ({createMenuOpen, setCreateMenuOpen, setTaskUpdated,}) => {
 

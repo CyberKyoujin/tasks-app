@@ -8,6 +8,7 @@ module.exports = {
     moduleNameMapper: {
       
       '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
+      '^axiosInstance$': '<rootDir>/__mocks__/axiosInstance.ts',
       
     },
     setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'], 

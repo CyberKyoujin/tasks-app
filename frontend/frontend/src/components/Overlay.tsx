@@ -1,15 +1,11 @@
 import React from "react";
-
-interface OverlayProps {
-    createMenuOpen: boolean;
-    setCreateMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
+import { OverlayProps } from "../types";
 
 const Overlay: React.FC<OverlayProps> = ({createMenuOpen, setCreateMenuOpen}) => {
     return (
         <div 
         className="overlay" 
+        data-testid="overlay"
         style={{display: createMenuOpen ? "block": "none"}}
         onClick={() => setCreateMenuOpen(!createMenuOpen)}>
         </div>

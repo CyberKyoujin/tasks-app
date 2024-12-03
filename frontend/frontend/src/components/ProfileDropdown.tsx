@@ -7,12 +7,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import { IoIosClose } from "react-icons/io";
 import TextField from '@mui/material/TextField';
 import useAuthStore from "../zustand/authStore";
-
-
-interface ProfileDropdwnProps {
-    isOpen: boolean;
-    setIsDropdownOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { ProfileDropdwnProps } from "../types";
 
 const ProfileDropdown: React.FC<ProfileDropdwnProps> = ({ isOpen, setIsDropdownOpen }) => {
 
@@ -102,19 +97,19 @@ const ProfileDropdown: React.FC<ProfileDropdwnProps> = ({ isOpen, setIsDropdownO
                   </TabList>
                 </Box>
     
-                <TabPanel value="1" sx={{ padding: 0 }}>
+                <TabPanel value="1" sx={{ padding: 0 }} role="tab">
                   <form action="" className="form" onSubmit={handleRegisterSubmit}>
-                    <TextField value={username} onChange={(e) => setUsername(e.target.value)} id="outlined-basic" label="Username" variant="outlined" />
-                    <TextField value={email} onChange={(e) => setEmail(e.target.value)} id="outlined-basic" label="Email" variant="outlined" />
-                    <TextField value={password} onChange={(e) => setPassword(e.target.value)} id="outlined-basic" type="password" label="Password" variant="outlined" />
+                    <TextField value={username} onChange={(e) => setUsername(e.target.value)} label="username" variant="outlined" />
+                    <TextField value={email} onChange={(e) => setEmail(e.target.value)} label="email" variant="outlined" />
+                    <TextField value={password} onChange={(e) => setPassword(e.target.value)} type="password" label="password" variant="outlined" />
                     <button type="submit" className="submit-btn">SUBMIT</button>
                   </form>
                 </TabPanel>
     
-                <TabPanel value="2" sx={{ padding: 0 }}>
+                <TabPanel value="2" sx={{ padding: 0 }} role="tab">
                   <form action="" className="form" onSubmit={handleLoginSubmit}>
-                    <TextField value={username} onChange={(e) => setUsername(e.target.value)} id="outlined-basic" label="Username" variant="outlined" />
-                    <TextField value={password} onChange={(e) => setPassword(e.target.value)} id="outlined-basic" type="password" label="Password" variant="outlined" />
+                    <TextField value={username} onChange={(e) => setUsername(e.target.value)} label="username" variant="outlined" />
+                    <TextField value={password} onChange={(e) => setPassword(e.target.value)} type="password" label="password" variant="outlined" />
                     <button type="submit" className="submit-btn">SUBMIT</button>
                   </form>
                 </TabPanel>

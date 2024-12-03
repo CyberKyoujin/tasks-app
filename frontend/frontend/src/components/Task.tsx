@@ -2,31 +2,10 @@ import React, { useEffect, useState } from "react";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { RiCheckDoubleLine } from "react-icons/ri";
 import useMainStore from "../zustand/mainStore";
-
-interface Task {
-    id: string;
-    title: string;
-    description: string;
-    is_completed: boolean;
-    priority: string;
-    due_date: string;
-    is_missed: boolean;
-    completed_at: string;
-}
+import { TaskObject } from "../types";
 
 
-interface TaskProps {
-    id: string;
-    title: string;
-    description: string;
-    is_completed: boolean;
-    priority: string;
-    due_date: string;
-    is_missed: boolean;
-    completed_at: string;
-}
-
-const Task: React.FC<TaskProps> = ({ id, title, description, is_completed, priority, due_date, is_missed, completed_at}) => {
+const Task: React.FC<TaskObject> = ({ id, title, description, is_completed, priority, due_date, is_missed, completed_at}) => {
 
     const [taskBackground, setTaskBackground] = useState<string>('');
     const [itemsBackground, setItemsBackground] = useState<string>('');
@@ -67,8 +46,6 @@ const Task: React.FC<TaskProps> = ({ id, title, description, is_completed, prior
             const updatedTasks = tasks.filter((task) => task.id !== id);
     
             setTasks(updatedTasks);
-    
-            console.log(`Task with ID ${id} deleted successfully`);
 
         } catch (error) {
             console.error("Failed to delete task:", error);
@@ -127,6 +104,8 @@ const Task: React.FC<TaskProps> = ({ id, title, description, is_completed, prior
                         backgroundColor: itemsBackground,
                         width: "100%"
                     }}
+                    aria-label="delete_btn"
+                    name="delete_btn"
                     onClick={() => handleDelete(id)}
                     >
                     <MdOutlineDeleteOutline/>
@@ -140,6 +119,8 @@ const Task: React.FC<TaskProps> = ({ id, title, description, is_completed, prior
                         width: "160px"
                     }}
                     onClick={() => handleDelete(id)}
+                    aria-label="delete_btn"
+                    name="delete_btn"
                 >
                     <MdOutlineDeleteOutline/>
                     
@@ -151,6 +132,8 @@ const Task: React.FC<TaskProps> = ({ id, title, description, is_completed, prior
                         backgroundColor: itemsBackground
                     }}
                     onClick={() => handleMarkCompleted(id)}
+                    aria-label="complete_btn"
+                    name="complete_btn"
                 >
                     <RiCheckDoubleLine />
                 </button>

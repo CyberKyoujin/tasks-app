@@ -36,7 +36,6 @@ function App() {
 
   useEffect(() => {
     fetchTasks();
-    console.log(tasks)
   }, [taskUpdated]);
 
   if (isLoading) return <div className='progress-container'>

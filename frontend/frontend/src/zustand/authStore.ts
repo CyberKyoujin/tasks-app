@@ -1,33 +1,7 @@
 import { create } from "zustand";
 import { jwtDecode } from "jwt-decode";
 import axiosInstance from "./axiosInstance";
-
-interface AuthTokens {
-    access: string;
-    refresh: string;
-}
-
-interface User {
-    id: string;
-    username: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    date_joined: string;
-    tasks: string;
-}
-
-interface AuthState {
-    authTokens: AuthTokens | null;
-    isAuthenticated: boolean;
-    user: User | null;
-    setTokens: (tokens: AuthTokens) => void;
-    setUser: (user: User) => void;
-    registerUser: (username: string, email: string, password: string) => Promise<void>;
-    loginUser: (username: string, password: string) => Promise<void>;
-    refreshToken: () => Promise<void>;
-    logoutUser: () => void;
-}
+import { AuthState, AuthTokens, User } from "../types";
 
 const useAuthStore = create<AuthState>((set, get) => ({
     authTokens: localStorage.getItem('access') && localStorage.getItem('refresh') 
@@ -55,7 +29,6 @@ const useAuthStore = create<AuthState>((set, get) => ({
         try{
             const response = await axiosInstance.post("/users/register/", {username, email, password});
             if (response.status === 201) {
-                console.log("User created successfully!");
                 window.location.href = "/";
             }
         } catch (error: any) {

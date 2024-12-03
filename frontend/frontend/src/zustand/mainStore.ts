@@ -1,28 +1,6 @@
 import { create } from "zustand";
 import axiosInstance from "./axiosInstance";
-
-interface Task {
-    id: string;
-    title: string;
-    description: string;
-    is_completed: boolean;
-    priority: string;
-    due_date: string;
-    is_missed: boolean;
-    completed_at: string;
-}
-
-
-interface MainState {
-    tasks: Task[];
-    isLoading: boolean;
-    error: string | null;
-    setTasks: (tasks: Task[]) => void;
-    fetchTasks: () => Promise<void>;
-    createTask: (formData: FormData) => Promise<void>;
-    markCompleted: (taskId: string) => Promise<void>;
-    deleteTask: (taskId: string) => Promise<void>;
-}
+import { Task, MainState } from "../types";
 
 
 const useMainStore = create<MainState>((set) => ({
@@ -56,7 +34,6 @@ const useMainStore = create<MainState>((set) => ({
         try {
             const response = await axiosInstance.post("/tasks/create/", formData);
             if (response.status === 201) {
-                console.log("Task created successfully!");
                 set({isLoading: false, error: null})
             } else {
                 set({ isLoading: false, error: "Failed to create task" });
@@ -71,7 +48,6 @@ const useMainStore = create<MainState>((set) => ({
         try {
             const response = await axiosInstance.post(`/tasks/complete/${taskId}/`);
             if (response.status === 200) {
-                console.log("Task marked as completed!");
                 set({ isLoading: false, error: null })
             } else {
                 set({ isLoading: false, error: "Failed to mark task as completed" });
@@ -87,7 +63,6 @@ const useMainStore = create<MainState>((set) => ({
         try {
             const response = await axiosInstance.delete(`/tasks/delete/${taskId}/`);
             if (response.status === 204) {
-                console.log("Task deleted successfully!");
                 set({ isLoading: false, error: null })
             } else {
                 set({ isLoading: false, error: "Failed to delete task" });

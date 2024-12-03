@@ -1,30 +1,10 @@
 import React from "react";
 import Task from "./Task";
-import { IconType } from "react-icons";
 import { FaPlus } from "react-icons/fa";
 import Grid from '@mui/material/Grid2';
 import { LuSearchX } from "react-icons/lu";
 import useAuthStore from "../zustand/authStore";
-
-interface TaskObject {
-    id: string;
-    title: string;
-    description: string;
-    is_completed: boolean;
-    priority: string;
-    due_date: string;
-    is_missed: boolean;
-    completed_at: string;
-}
-
-interface TasksSectionProps {
-    tasks: TaskObject[];
-    title: string;
-    IconComponent: IconType;
-    setCreateMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    setTaskUpdated: React.Dispatch<React.SetStateAction<boolean>>;
-    setDropdownOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { TasksSectionProps } from "../types";
 
 const TasksSection: React.FC<TasksSectionProps> = ({tasks, title, IconComponent, setCreateMenuOpen, setDropdownOpen}) => {
    
