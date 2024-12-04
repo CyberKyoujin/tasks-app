@@ -29,6 +29,7 @@ const useAuthStore = create<AuthState>((set, get) => ({
         try{
             const response = await axiosInstance.post("/users/register/", {username, email, password});
             if (response.status === 201) {
+                await get().loginUser(username, password);
                 window.location.href = "/";
             }
         } catch (error: any) {
