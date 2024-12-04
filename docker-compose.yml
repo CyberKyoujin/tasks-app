@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./backend:/app
+      - db_data:/app/base/db.sqlite3
+    depends_on:
+      - db
+    environment:
+       - DJANGO_SETTINGS_MODULE=base.settings
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        - REACT_APP_API_URL=http://backend:8000
+    container_name: frontend
+    ports:
+      - '3000:80'
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:13
+    container_name: db
+    environment:
+      - POSTGRES_DB=yourdbname
+      - POSTGRES_USER=yourdbuser
+      - POSTGRES_PASSWORD=yourdbpassword
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+volumes:
+  db_data:
