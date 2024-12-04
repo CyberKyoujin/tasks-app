@@ -7,7 +7,7 @@ Full-Stack Tasks Single Page Application built with React and Django frameworks.
 1. Clone repository
 ```
 cd your-directory
-git clone 
+git clone https://github.com/CyberKyoujin/tasks-app.git
 ```
 
 2. Run frontend tests
